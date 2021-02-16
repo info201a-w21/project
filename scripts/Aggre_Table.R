@@ -12,3 +12,19 @@
 # isn't distracting
 #When you display the table in your index.Rmd file, you must also describe 
 #why you included the table, and what information it reveals.
+
+library(tidyverse)
+library(dplyr)
+
+
+suicide_rate <- read.csv("https://raw.githubusercontent.com/info201a-w21/project_AF/main/data/suicide%20rate.csv?token=ASMKXP6DHKSYGYDADA7KGKDAGTXAU")
+WHR_2016 <- read.csv("https://raw.githubusercontent.com/info201a-w21/project_AF/main/data/WHR2020/2016.csv?token=ASMKXP4TURU76S7WXIB7363AGTWZS")
+
+suicide_2016 <- suicide_rate %>%
+  filter (X.1  == "2016") %>%
+  group_by(X) %>%
+  select(Crude.suicide.rates..per.100.000.population.) %>%
+  rename(country = "X") %>%
+  rename(suicide_rate_per_100000_population = "Crude.suicide.rates..per.100.000.population.")
+
+
