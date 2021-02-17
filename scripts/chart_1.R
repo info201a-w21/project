@@ -1,20 +1,58 @@
-# Chart Script 1
-# create a visualization of your data
-#Each chart must return a different type of visualization (e.g., you can only 
-#create one Scatter Plot,one map, one bar chart, etc.).  
-#Again, in your report you must describe why you included the chart 
-#(e.g., what it attempts to seeks to express), and what information it reveals. 
-#For each chart, we expect the following:
+source("Aggre_Table.R")
+library(ggplot2)
+library(maps)
+library(mapproj)
+library(dplyr)
+library(tidyr)
+library(sf)
 
-#Chart types are intentionally selected to reveal particular patterns in the dataset
-#Optimal graphical encodings are selected to present the data in the most interpretable way
-#For two dimensional plots, X, Y axis labels are set with clear human readable titles
-#When appropriate, the chart has a title
-#A legend is present for any color encodings
-#If a legend is present, the legend label has been set to be easily readable
-#If a legend is present, the legend doesn't run off the page (this means you 
-# should not be using more than ~10 colors)
 
-#When you display each chart in your index.Rmd file, you must:
-#Describe the purpose of including the chart
-#Describe any notable observations and insights from the chart
+#inspect 
+  as.factor(suicide_2016$Country) %>% levels()
+suicide_2016$Country <- recode(suicide_2016$Country,
+                               "United States of America" = "USA",
+                               "Republic of Korea" = "South Korea",
+                               "Democratic People's Republic of Korea" = "North Korea",
+                               "Viet Nam" = "Vietnam",
+                               "Venezuela (Bolivarian Republic of)" = "Venezuela",
+                               "United Republic of Tanzania" = "Tanzania",
+                               "United Kingdom of Great Britain and Northern Ireland" = "UK",
+                               "Trinidad and Tobago" = "Trinidad",
+                               "Syrian Arab Republic" = "Syria",
+                               "Saint Vincent and the Grenadines" = "Saint Vincent",
+                               "Russian Federation" = "Russia",
+                               "Republic of Moldova" = "Moldova",
+                               "North Macedonia" = "Macedonia",
+                               "Micronesia (Federated States of)" = "Micronesia",
+                               "Lao People's Democratic Republic" = "Laos",
+                               "Iran (Islamic Republic of)" = "Iran",
+                               "Czechia" = "Czech Republic",
+                               "Côte d'Ivoire" = "Ivory Coast",
+                               "Congo" = "Republic of Congo",
+                               "Cabo Verde" = "Cape Verde",
+                               "Brunei Darussalam" = "Brunei",
+                               "Bolivia (Plurinational State of)" = "Bolivia",
+                               "Antigua and Barbuda" = "Antigua"
+                               )
+suicide_2016$suicide_rate_per_100000_population <- as.numeric(as.character(
+  suicide_2016$suicide_rate_per_100000_population))
+ 
+map.world <- map_data("world")  %>%
+  rename(Country = region) %>%
+  left_join(suicide_2016, by="Country")
+
+ggplot(map.world) +
+  geom_polygon(aes(x = long, y = lat, group = group,
+  fill = suicide_rate_per_100000_population), color = "black", size = 0.05)+
+  labs(title = "Global Suicide rates", 
+       subtitle = "sources:https://www.kaggle.com/utkarshxy/who-worldhealth-statistics-2020-complete?select=crudeSuicideRates.csv",
+       fill = "suicide rate per 100,000 pop") +
+  scale_fill_viridis_c(option = "plasma") + 
+  theme(
+    axis.title.x = element_blank(), 
+    axis.title.y = element_blank(), 
+    panel.background = element_rect(fill = "azure"), 
+    panel.border = element_rect(fill = NA))
+
+
+
