@@ -4,11 +4,10 @@ library(maps)
 library(mapproj)
 library(dplyr)
 library(tidyr)
-library(sf)
-
 
 #inspect 
-  as.factor(suicide_2016$Country) %>% levels()
+as.factor(suicide_2016$Country) %>% levels()
+#recode names
 suicide_2016$Country <- recode(suicide_2016$Country,
                                "United States of America" = "USA",
                                "Republic of Korea" = "South Korea",
@@ -34,13 +33,14 @@ suicide_2016$Country <- recode(suicide_2016$Country,
                                "Bolivia (Plurinational State of)" = "Bolivia",
                                "Antigua and Barbuda" = "Antigua"
                                )
+#change discrete to continuous
 suicide_2016$suicide_rate_per_100000_population <- as.numeric(as.character(
   suicide_2016$suicide_rate_per_100000_population))
- 
+#join charts
 map.world <- map_data("world")  %>%
   rename(Country = region) %>%
   left_join(suicide_2016, by="Country")
-
+#create world map
 ggplot(map.world) +
   geom_polygon(aes(x = long, y = lat, group = group,
   fill = suicide_rate_per_100000_population), color = "black", size = 0.05)+
