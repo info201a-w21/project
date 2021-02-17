@@ -37,11 +37,11 @@ suicide_2016$Country <- recode(suicide_2016$Country,
 suicide_2016$suicide_rate_per_100000_population <- as.numeric(as.character(
   suicide_2016$suicide_rate_per_100000_population))
 #join charts
-map.world <- map_data("world")  %>%
+map.world <- map_data("world") %>%
   rename(Country = region) %>%
   left_join(suicide_2016, by="Country")
 #create world map
-ggplot(map.world) +
+ggplot(map.world) + 
   geom_polygon(aes(x = long, y = lat, group = group,
   fill = suicide_rate_per_100000_population), color = "black", size = 0.05)+
   labs(title = "Global Suicide rates", 
@@ -49,8 +49,8 @@ ggplot(map.world) +
        fill = "suicide rate per 100,000 pop") +
   scale_fill_viridis_c(option = "plasma") + 
   theme(
-    axis.title.x = element_blank(), 
-    axis.title.y = element_blank(), 
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
     panel.background = element_rect(fill = "azure"), 
     panel.border = element_rect(fill = NA))
 
