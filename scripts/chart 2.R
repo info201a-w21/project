@@ -1,6 +1,4 @@
 source("Aggre_Table.R")
-
-install.packages("ggplot2") 
 library("ggplot2") 
 
 ggplot(data = suicide_2016) +

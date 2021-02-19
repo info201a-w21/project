@@ -1,0 +1,41 @@
+---
+title: "index"
+author: "Yifan Dai, Chole Su, Yilin Feng"
+date: "2/20/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include = FALSE}
+## Source in the other script
+source("Aggre_Table.R")
+source("summary_info.R")
+source("map.R")
+source("chart 2.R")
+# Load the `knitr` library
+library(knitr)
+```
+# Exploratory Analysis
+## Introduction 
+explain domain/data: 
+
+```{r cars}
+summary(cars)
+```
+
+## Summary
+info from summary_info.R: 
+
+## Table
+
+## Chart
+
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

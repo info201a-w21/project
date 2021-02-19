@@ -41,7 +41,7 @@ map.world <- map_data("world") %>%
   rename(Country = region) %>%
   left_join(suicide_2016, by="Country")
 #create world map
-ggplot(map.world) + 
+map <- ggplot(map.world) + 
   geom_polygon(aes(x = long, y = lat, group = group,
   fill = suicide_rate_per_100000_population), color = "black", size = 0.05)+
   labs(title = "Global Suicide rates", 
@@ -53,6 +53,3 @@ ggplot(map.world) +
     axis.title.y = element_blank(),
     panel.background = element_rect(fill = "azure"), 
     panel.border = element_rect(fill = NA))
-
-
-
