@@ -4,24 +4,24 @@ WHR_2016 <- read.csv("https://raw.githubusercontent.com/info201a-w21/project_AF/
 Alcohol_Consumption <- read_csv("https://raw.githubusercontent.com/info201a-w21/project_AF/main/data/HappinessAlcoholConsumption.csv?token=ASMKXPZIFESXAGIONVNMDYDAGT43Y")
 
 summary_info <- list()
-#How many Country in suicide_rate in 2016?
+#How many country in suicide_rate dataset in 2016?
 summary_info$Country <- suicide_rate %>%
   filter(X.1 == 2016) %>%
   select(X) %>%
   nrow()
 
 #What's the top 1 happiness country in 2016?
-summary_info$higest_country <- WHR_2016 %>%
+summary_info$highest_country <- WHR_2016 %>%
   filter(Happiness.Rank == min(Happiness.Rank, na.rm = T)) %>%
   pull(Country)
 
 #What's happiness score with the highest rank in 2016?
-summary_info$higest_score <- WHR_2016 %>%
+summary_info$highest_score <- WHR_2016 %>%
   filter(Happiness.Rank == min(Happiness.Rank, na.rm = T)) %>%
   pull(Happiness.Score)
 
 #What's the beer consumption with the highest score in 2016?
-summary_info$beer_with_higest_score <- Alcohol_Consumption %>%
+summary_info$beer_with_highest_score <- Alcohol_Consumption %>%
   filter(HappinessScore == max(HappinessScore, na.rm = T)) %>%
   pull(Beer_PerCapita)
 
