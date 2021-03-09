@@ -1,5 +1,6 @@
 source("server.R")
 
+#map input
 map.world$suicide_rate_per_100000_population <- as.numeric(
     map.world$suicide_rate_per_100000_population)
 
@@ -13,14 +14,38 @@ sr_input <- sliderInput(
     value = sr_range
 )
 
-ui <- tabPanel(
-    titlePanel("Global Suicide rate"),
+#Scatterplot input
+
+x_input <- selectInput(
+    inputId = "x_var",
+    label = h3("Choose an x variable"),
+    choices = c("Beer_PerCapita", "suicide_rate_per_100000_population", "Happiness.Score")
+)
+
+y_input <- selectInput(
+    inputId = "y_var",
+    label = h3("Choose an y variable"),
+    choices = c("Beer_PerCapita", "suicide_rate_per_100000_population", "Happiness.Score")
+)
+
+#bar chart input 
+
+# introduction panel
+intro_panel <- tabPanel("Introduction",
+        h3("The purpose of the project"),
+        p("The data of this project is from three datasets: The happiness score and ranking, suicide rate and beer consumption in 2016."),
+        p("We want to see how the suciuide rate shows depends on different countries."),
+        p("Also, to find the relation between those three variables.")
+)                      
+
+#map_panel 
+map_panel <- tabPanel("Global Suicide rate",
     sidebarLayout(
         sidebarPanel(
             h3("Adjustable Graphical Parameters"),
             sr_input
         ),
-        ### Main panel displays the scatterplot
+        ### Main panel displays the map
         mainPanel(
             h3("Map"),
             plotlyOutput(outputId = "plot_data"),
@@ -28,3 +53,53 @@ ui <- tabPanel(
         )
     )
 )
+
+
+#plot_panel
+plot_panel <- tabPanel("Realtion Between Variables",
+    sidebarLayout(
+        sidebarPanel(
+            h3("Choose x and y variable"),
+            x_input,
+            y_input
+        ),
+        mainPanel(
+            h3("Scatterplot"),
+            plotlyOutput(outputId = "scatter"),
+            p("This scatterplot can show the relationship between three variable.")
+        )
+    )
+)
+
+#bar_panel
+bar_panel <- tabPanel("...",
+    sidebarLayout(
+        sidebarPanel(
+            h3("...")
+        ),
+        mainPanel(
+            h3("...")
+        )
+    )
+)
+    
+    
+#summary panel    
+summ_panel <-  tabPanel("Conslusion",
+        h3("Three speicific takeaways from this project"),
+        p("First, ..."),
+        p("Then, ..."),
+        p("Moreover, ...")
+
+)
+
+#ui
+ui<- navbarPage(
+    "Final Project",
+    intro_panel,
+    map_panel,
+    plot_panel,
+    bar_panel,
+    summ_panel
+)
+

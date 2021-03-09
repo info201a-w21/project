@@ -1,4 +1,5 @@
 source("map.R")
+source("chart 2.R")
 library(dplyr)
 library(ggplot2)
 library(plotly)
@@ -11,6 +12,9 @@ map.world$suicide_rate_per_100000_population <- as.numeric(
 sr_range <- range(map.world$suicide_rate_per_100000_population, na.rm = T)
 
 server <- function(input, output) {
+    
+#map  
+    
     output$plot_data <- renderPlotly({
         p <- map.world %>%
             filter(suicide_rate_per_100000_population > input$suicide[1], 
@@ -31,4 +35,24 @@ server <- function(input, output) {
         
         ggplotly(map)
     })
+    
+#scatterplot 
+    
+    output$scatter <- renderPlotly({
+        
+        x_choices <<- input$x_var
+        
+        y_choices <<- input$y_var
+        
+        my_plot <- ggplot(suicide_2016) +
+            geom_point(mapping = aes_string(x = x_choices, y = y_choices)) +
+            labs(title = "The relationship between beer consumption, suicide rate and happiness score")
+        ggplotly(my_plot)
+    })
+    
+
+#bar chart
+    
+    
+        
 }
