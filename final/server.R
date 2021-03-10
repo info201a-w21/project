@@ -25,8 +25,8 @@ server <- function(input, output) {
                              fill = suicide_rate_per_100000_population,
                              location = Country), 
                          color = "black", size = 0.05) +
-            labs(title = "Global Suicide rates", 
-                 subtitle = "sources:https://www.kaggle.com/utkarshxy/who-worldhealth-statistics-2020-complete?select=crudeSuicideRates.csv",
+            labs(title = "Global Suicide rates vs Country", 
+                 subtitle = "sources: https://www.kaggle.com/utkarshxy/who-worldhealth-statistics-2020-complete?select=crudeSuicideRates.csv",
                  fill = "suicide rate per 100,000 pop") +
             theme(
                 axis.title.x = element_blank(),
@@ -61,23 +61,18 @@ server <- function(input, output) {
             arrange(desc(Beer_PerCapita)) %>%
             na.omit() %>%
             head(20)
-        
-        colnames(top_20) <- c("Country", "Beer perCapita", 
-                              "Suicide Rate per 100000 Population", "Happiness Score")
-        
+    
         chart <- ggplot(top_20) + 
-            geom_col(aes_string(x = reorder(Country, Beer_PerCapita),
-                         y = input$top20),
+            geom_col(mapping = aes_string(x = "Country" , y = input$top20_var),
                      fill = "#9ebcda")+
             coord_flip() + 
             theme_bw() +
             labs(
-                title = "Top 20 Countries with the Most Beer Consumption, 
-                        And Their Respective Suicide Rate and Happiness Score", 
+                title = "Top 20 Countries with the Most Beer Consumption, And Their Respective Suicide Rate and Happiness Score", 
                 x = "Countries")
         
         ggplotly(chart)
-    })
+    }) 
     
         
 }
