@@ -30,6 +30,14 @@ y_input <- selectInput(
 
 #bar chart input 
 
+bar_y_input <- selectInput(
+    inputId = "top20",
+    label = h3("Choose an x variable"),
+    choices = c("Beer PerCapita",
+                "Suicide Rate per 100000 Population",
+                "Happiness Score")
+)
+
 # introduction panel
 intro_panel <- tabPanel("Introduction",
         h3("The purpose of the project"),
@@ -56,7 +64,7 @@ map_panel <- tabPanel("Global Suicide rate",
 
 
 #plot_panel
-plot_panel <- tabPanel("Realtion Between Variables",
+plot_panel <- tabPanel("Relation Between Variables",
     sidebarLayout(
         sidebarPanel(
             h3("Choose x and y variable"),
@@ -72,15 +80,18 @@ plot_panel <- tabPanel("Realtion Between Variables",
 )
 
 #bar_panel
-bar_panel <- tabPanel("...",
-    sidebarLayout(
-        sidebarPanel(
-            h3("...")
-        ),
-        mainPanel(
-            h3("...")
+bar_panel <- tabPanel("Countries with Top20 Beer Consumption",
+                      sidebarLayout(
+                          sidebarPanel(
+                              h3("Adjustable Graphic Parameter"),
+                              bar_y_input
+                          ),
+                          mainPanel(
+                              h3("Bar Chart"),
+                              plotlyOutput(outputId = "bar_chart"),
+                              p("This bar chart shows...")
+                )
         )
-    )
 )
     
     

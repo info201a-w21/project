@@ -1,5 +1,6 @@
 source("map.R")
 source("chart 2.R")
+source("chart_3.R")
 library(dplyr)
 library(ggplot2)
 library(plotly)
@@ -53,6 +54,30 @@ server <- function(input, output) {
 
 #bar chart
     
+    output$bar_chart <- renderPlotly({
+        
+        top_20 <- suicide_2016 %>%
+            select(Country, Beer_PerCapita, Happiness.Score, suicide_rate_per_100000_population) %>%
+            arrange(desc(Beer_PerCapita)) %>%
+            na.omit() %>%
+            head(20)
+        
+        colnames(top_20) <- c("Country", "Beer perCapita", 
+                              "Suicide Rate per 100000 Population", "Happiness Score")
+        
+        chart <- ggplot(top_20) + 
+            geom_col(aes_string(x = reorder(Country, Beer_PerCapita),
+                         y = input$top20),
+                     fill = "#9ebcda")+
+            coord_flip() + 
+            theme_bw() +
+            labs(
+                title = "Top 20 Countries with the Most Beer Consumption, 
+                        And Their Respective Suicide Rate and Happiness Score", 
+                x = "Countries")
+        
+        ggplotly(chart)
+    })
     
         
 }

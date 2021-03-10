@@ -7,7 +7,7 @@ library("dplyr")
 #create a chart with "suicide_2016" data set. 
 #first, filter down to top 10 countries with the most beer consumption per capita. 
 top_20 <- suicide_2016 %>%
-  select(Country, Beer_PerCapita, Happiness.Score) %>%
+  select(Country, Beer_PerCapita, Happiness.Score, suicide_rate_per_100000_population) %>%
   arrange(desc(Beer_PerCapita)) %>%
   na.omit() %>%
   head(20)
