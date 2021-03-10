@@ -1,5 +1,7 @@
 source("server.R")
 library("htmltools")
+library(shiny)
+library(shinythemes)
 
 #map input
 map.world$suicide_rate_per_100000_population <- as.numeric(
@@ -130,13 +132,14 @@ summ_panel <-  tabPanel("Conslusion",
 )
 
 #ui
-ui<- navbarPage(
-    includeCSS("styles.css"),
+ui<- shinyUI(
+        navbarPage(
+            theme = shinytheme("sandstone"),
     "Final Project",
     intro_panel,
     map_panel,
     plot_panel,
     bar_panel,
     summ_panel
+    )
 )
-
